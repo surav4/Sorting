@@ -1,21 +1,22 @@
-// Name:
-// Date:
+ //Name: Surav
+ //Date: 10/26/2019
 
 import java.util.*;
 import java.io.*;
 
-public class SelectionSort_Driver
+public class InsertionSort_Driver
 {
    public static void main(String[] args) throws Exception
    {
-     //Part 1, for doubles
+      //Part 1, for doubles
       int n = (int)(Math.random()*100)+20;
       double[] array = new double[n];
       for(int k = 0; k < array.length; k++)
          array[k] = Math.random()*100;	
       
-      Selection.sort(array);
+      Insertion.sort(array);
       print(array);
+      
       if( isAscending(array) )
          System.out.println("In order!");
       else
@@ -29,7 +30,7 @@ public class SelectionSort_Driver
       for(int k = 0; k < arrayStr.length; k++)
          arrayStr[k] = sc.next();	
    
-      Selection.sort(arrayStr);
+      Insertion.sort(arrayStr);
       print(arrayStr);
       System.out.println();
       
@@ -38,67 +39,90 @@ public class SelectionSort_Driver
       else
          System.out.println("Out of order  :-( ");
    }
-  
+   
    public static void print(double[] a)
    {
-      for(double d: a)         //for-each
+      for(double d: a)         // for-each loop
          System.out.print(d+" ");
       System.out.println();
    }
-  
+   
    public static void print(Object[] papaya)
    {
-      for(Object abc : papaya)     //for-each
+      for(Object abc : papaya)    
          System.out.print(abc+" ");
    }
-  
+   
    public static boolean isAscending(double[] a)
    {
-   
+   int b =0;
+   while(b<a.length-2){
+      if(a[b]>a[b+1])
+         return false;
+      b = b+1;
+   }
+   return true;
+
    }
    
-   @SuppressWarnings("unchecked")
+   @SuppressWarnings("unchecked")//this removes the warning for Comparable
    public static boolean isAscending(Comparable[] a)
    {
-   
+   int b =0;
+   while(b<a.length-2){
+      if(a[b].compareTo(a[b+1])>0)
+         return false;
+      b = b+1;
+   }
+   return true;
+
    }
 }
-/////////////////////////////////////////////////////
 
-class Selection
+//**********************************************************
+
+class Insertion
 {
    public static void sort(double[] array)
-   {
-   
+   { 
+      for(int x =1; x<array.length; x++){
+         double b = array[x];
+         
+         
+         int a =shift(array, x, b);
+         array[a] = b;
+      }
    }
-   
-   // upper controls where the inner loop of the Selection Sort ends
-   private static int findMax(double[] array, int upper)
+ 
+   private static int shift(double[] array, int index, double value)
    {
-   
-   
+   while(index-1>=0 &&array[index-1]>value){
+      array[index]= array[index-1];
+      index = index-1;
    }
-   private static void swap(double[] array, int a, int b)
-   {
-   
-   }   	
-   
-	/*******  for Comparables ********************/
+   return index;
+    }
+ 
    @SuppressWarnings("unchecked")
    public static void sort(Comparable[] array)
-   {
-   
+   { 
+    for(int x =1; x<array.length; x++){
+         Comparable b = array[x];
+         
+         
+         int a =shift(array, x, b);
+         array[a] = b;
+      }
+
    }
    
    @SuppressWarnings("unchecked")
-   public static int findMax(Comparable[] array, int upper)
+   private static int shift(Comparable[] array, int index, Comparable value)
    {
-   
-   
+while(index-1>=0 &&array[index-1].compareTo(value)>0){
+      array[index]= array[index-1];
+      index = index-1;
    }
-   public static void swap(Object[] array, int a, int b)
-   {
-   
+   return index;
    }
 }
-
